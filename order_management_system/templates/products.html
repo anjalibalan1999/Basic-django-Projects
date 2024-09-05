@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+    <h1>Available Products</h1>
+    <ul>
+        {% for product in products %}
+        <li>{{ product.name }} - ${{ product.price }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'place_order' username=username %}">Place an Order</a><br>
+    <a href="{% url 'view_orders' username=username %}">View Your Orders</a>
+</body>
+</html>

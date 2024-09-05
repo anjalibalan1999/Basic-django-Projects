@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 50px auto;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {background-color: #f5f5f5;}
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Available Products</h1>
+    <table>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Price</th>
+        </tr>
+        {% for product_id, product_info in products.items %}
+        <tr>
+            <td>{{ product_id }}</td>
+            <td>{{ product_info.name }}</td>
+            <td>${{ product_info.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
