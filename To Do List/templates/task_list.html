@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .header {
+            background-color: #ff6f61;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h2 {
+            margin: 0;
+        }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .task.completed .task-title {
+            text-decoration: line-through;
+        }
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .task-actions button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ff6f61;
+        }
+        .task-actions button:hover {
+            color: #e65c50;
+        }
+        .task-actions .delete-task {
+            color: #dc3545;
+        }
+        .task-actions .delete-task:hover {
+            color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Hello {{ user.username }},</h2>
+            <a href="{% url 'logout' %}" style="color: white; text-decoration: none; margin-top: 1rem;">Logout</a>
+        </div>
+        <div class="add-task" style="margin-top: 1rem;">
+            <a href="{% url 'add_task' %}" style="color: #e65c50; text-decoration: none;">Add New task +</a>
+        </div>
+        <p>You have {{ incomplete_tasks_count }} incomplete task{{ incomplete_tasks_count|pluralize }}.</p>
+        <div>
+            {% for task in tasks %}
+                <div class="task {% if task.is_completed %}completed{% endif %}">
+                    <span class="task-title">{{ task.title }}</span>
+                    <div class="task-actions">
+                        <form method="POST" action="{% url 'toggle_task' task.id %}">
+                            {% csrf_token %}
+                            <button type="submit">&#x2714;</button>
+                        </form>
+                        <form method="POST" action="{% url 'remove_task' task.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-task">&#x2716;</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+</body>
+</html>
